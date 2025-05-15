@@ -1,0 +1,35 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  text-align: center;
+}
+
+.card {
+  background: white;
+  width: 300px;
+  height: 200px;
+  margin: 20px auto;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s;
+}
+
+.card.flipped {
+  transform: rotateY(180deg);
+}
+
+#next {
+  padding: 10px 20px;
+  font-size: 16px;
+}
