@@ -1,29 +1,62 @@
 let cards = [];
 let currentIndex = 0;
-let flipped = false;
+let showingQuestion = true;
+let autoInterval = null;
 
-async function loadCards() {
-  const res = await fetch('./data/cards.json');
-  cards = await res.json();
-  showCard();
+fetch('cards.json')
+  .then(response => response.json())
+  .then(data => {
+    cards = shuffleArray(data);
+    currentIndex = 0;
+    displayCard();
+  });
+
+function displayCard() {
+  const card = cards[currentIndex];
+  const flashcard = document.getElementById('flashcard');
+  flashcard.textContent = showingQuestion ? card.question : card.answer;
 }
 
-function showCard() {
-  flipped = false;
-  const card = cards[currentIndex];
-  document.getElementById('question').innerText = card.question;
-  document.getElementById('answer').innerText = card.answer;
-  document.getElementById('flashcard').classList.remove('flipped');
+function shuffleArray(array) {
+  return [...array].sort(() => Math.random() - 0.5);
 }
 
 document.getElementById('flashcard').addEventListener('click', () => {
-  flipped = !flipped;
-  document.getElementById('flashcard').classList.toggle('flipped');
+  showingQuestion = !showingQuestion;
+  displayCard();
 });
 
 document.getElementById('next').addEventListener('click', () => {
   currentIndex = (currentIndex + 1) % cards.length;
-  showCard();
+  showingQuestion = true;
+  displayCard();
 });
 
-loadCards();
+document.getElementById('autoToggle').addEventListener('change', (e) => {
+  if (e.target.checked) {
+    startAutoSlide();
+  } else {
+    stopAutoSlide();
+  }
+});
+
+document.getElementById('intervalSelect').addEventListener('change', () => {
+  if (document.getElementById('autoToggle').checked) {
+    startAutoSlide();
+  }
+});
+
+function startAutoSlide() {
+  stopAutoSlide();
+  const interval = parseInt(document.getElementById('intervalSelect').value, 10);
+  autoInterval = setInterval(() => {
+    document.getElementById('next').click();
+  }, interval);
+}
+
+function stopAutoSlide() {
+  if (autoInterval) {
+    clearInterval(autoInterval);
+    autoInterval = null;
+  }
+}
