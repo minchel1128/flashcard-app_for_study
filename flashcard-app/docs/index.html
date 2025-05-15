@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flashcard 학습</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <div id="flashcard" class="card">로딩 중...</div>
+
+    <div class="controls">
+      <button id="next">다음 ▶</button>
+    </div>
+
+    <div class="auto-control">
+      <label>
+        <input type="checkbox" id="autoToggle" />
+        자동 넘김
+      </label>
+      <select id="intervalSelect">
+        <option value="5000">5초</option>
+        <option value="10000" selected>10초</option>
+        <option value="15000">15초</option>
+      </select>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
